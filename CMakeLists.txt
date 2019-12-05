@@ -3,7 +3,7 @@ project(scratchy VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 11)
 
-include_directories(./include)
+include_directories(include)
 
 set(
     SOURCE_FILES
@@ -18,7 +18,7 @@ add_library(
 target_include_directories(
     scratchy 
     PUBLIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    include
 )
 
 include(CTest)
