@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
     - name: configure
       run:  mkdir build && cd build && cmake -DCMAKE_CXX_FLAGS="-Werror" -DBUILD_TESTING="ON" ..
     - name: build
