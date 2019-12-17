@@ -3,11 +3,15 @@ project(scratchy VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 11)
 
+set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
+
+include(cotire)
+
 include_directories(include)
 
 set(
     SOURCE_FILES
-    ./src/BitWriter.cpp ./src/BitReader.cpp
+    ./src/OutputBitStream.cpp ./src/InputBitStream.cpp
 )
 
 add_library(
@@ -21,12 +25,21 @@ target_include_directories(
     include
 )
 
-include(CTest)
+cotire(scratchy)
+
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/third_party/catch/contrib")
 
     add_subdirectory(third_party/catch)
-    add_executable(test_main test/test.cpp)
+
+    add_executable(
+        test_main
+        test/test_main.cpp
+        test/unit/InputBitStreamTest.cpp
+        test/unit/OutputBitStreamTest.cpp
+        test/feature/StreamingTest.cpp
+    )
+
     target_link_libraries(test_main Catch2::Catch2 scratchy)
 
     include(Catch)
