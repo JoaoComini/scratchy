@@ -11,7 +11,10 @@ jobs:
       with:
         submodules: true
     - name: configure
-      run: mkdir build && cd build && cmake -DCMAKE_CXX_FLAGS="-Werror" -DBUILD_TESTING="ON" ..
+      run: |
+        mkdir build
+        cd build
+        cmake -DCMAKE_CXX_FLAGS="-Werror" -DBUILD_TESTING="ON" -DENABLE_COVERAGE="ON" ..
     - name: build
       run: cmake --build build
     - name: test

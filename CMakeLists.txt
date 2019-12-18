@@ -3,7 +3,7 @@ project(scratchy VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
+set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/third_party/cotire/CMake")
 
 include(cotire)
 
@@ -27,13 +27,18 @@ target_include_directories(
 
 cotire(scratchy)
 
+
+option(ENABLE_COVERAGE "Enables gcov coverage" OFF)
+
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
 
-    SET(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
-    SET(GCC_COVERAGE_LINK_FLAGS    "-lgcov")
+    if (ENABLE_COVERAGE)
+        SET(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
+        SET(GCC_COVERAGE_LINK_FLAGS    "-lgcov")
 
-    SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
-    SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+        SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+        SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+    endif()
 
     add_subdirectory(third_party/catch)
 
