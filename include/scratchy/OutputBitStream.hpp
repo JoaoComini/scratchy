@@ -2,6 +2,8 @@
 #include <cstdint>
 #include <iostream>
 
+#include <scratchy/BitMask.hpp>
+
 class OutputBitStream {
 
     public:
@@ -9,22 +11,22 @@ class OutputBitStream {
         OutputBitStream(uint32_t size);
         ~OutputBitStream();
 
-        bool writeBool(const bool input);
-        bool writeByte(const uint8_t input);
-        bool writeInt(const int32_t input);
-        bool writeShort(const int16_t input);
-        bool writeFloat(const float input);
+        template <class T> 
+        bool write(const T input);
+
         uint32_t *getBuffer();
         uint32_t getBufferSize();
 
         void flush();
     
     private:
-        uint64_t scratching = 0x0;
-        int scratching_bits = 0x0;
-        int word_index = 0x0;
+        uint64_t scratching = 0;
+        int scratching_bits = 0;
+        int word_index = 0;
         uint32_t *buffer;
         uint32_t buffer_size;
+        uint32_t bits_written = 0;
+        uint32_t total_bits;
 
         void scratch();
 

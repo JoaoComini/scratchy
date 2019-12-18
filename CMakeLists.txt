@@ -28,8 +28,6 @@ target_include_directories(
 cotire(scratchy)
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/third_party/catch/contrib")
-
     add_subdirectory(third_party/catch)
 
     add_executable(
@@ -41,7 +39,4 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     )
 
     target_link_libraries(test_main Catch2::Catch2 scratchy)
-
-    include(Catch)
-    catch_discover_tests(test_main)
 endif()
