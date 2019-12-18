@@ -26,8 +26,8 @@ TEST_CASE("OutputBitStream can write 32-bit integers", "[OutputBitStream]") {
 
     OutputBitStream *stream = new OutputBitStream(sizeof(int32_t) * 2);
 
-    REQUIRE(stream->writeInt(10));
-    REQUIRE(stream->writeInt(-20));
+    REQUIRE(stream->write<int>(10));
+    REQUIRE(stream->write<int>(-20));
 
     uint32_t* buffer = stream->getBuffer();
 
@@ -41,8 +41,8 @@ TEST_CASE("OutputBitStream can write 16-bit integers", "[OutputBitStream]") {
 
     OutputBitStream *stream = new OutputBitStream(sizeof(int16_t) * 2);
 
-    REQUIRE(stream->writeShort(10));
-    REQUIRE(stream->writeShort(-20));
+    REQUIRE(stream->write<short>(10));
+    REQUIRE(stream->write<short>(-20));
 
     uint32_t* buffer = stream->getBuffer();
 
@@ -56,8 +56,8 @@ TEST_CASE("OutputBitStream can write bytes", "[OutputBitStream]") {
 
     OutputBitStream *stream = new OutputBitStream(sizeof(uint8_t) * 2);
 
-    REQUIRE(stream->writeByte(10));
-    REQUIRE(stream->writeByte(30));
+    REQUIRE(stream->write<unsigned char>(10));
+    REQUIRE(stream->write<unsigned char>(30));
     
     stream->flush();
 
@@ -73,10 +73,10 @@ TEST_CASE("OutputBitStream can write boolean values", "[OutputBitStream]") {
 
     OutputBitStream *stream = new OutputBitStream(sizeof(bool) * 2);
 
-    REQUIRE(stream->writeBool(true));
-    REQUIRE(stream->writeBool(false));
-    REQUIRE(stream->writeBool(false));
-    REQUIRE(stream->writeBool(true));
+    REQUIRE(stream->write<bool>(true));
+    REQUIRE(stream->write<bool>(false));
+    REQUIRE(stream->write<bool>(false));
+    REQUIRE(stream->write<bool>(true));
     
     stream->flush();
 
@@ -94,8 +94,8 @@ TEST_CASE("OutputBitStream can write 32-bit floats", "[OutputBitStream]") {
 
     OutputBitStream *stream = new OutputBitStream(sizeof(float) * 2);
 
-    REQUIRE(stream->writeFloat(10.05f));
-    REQUIRE(stream->writeFloat(-20.02f));
+    REQUIRE(stream->write<float>(10.05f));
+    REQUIRE(stream->write<float>(-20.02f));
 
     uint32_t* buffer = stream->getBuffer();
 
@@ -114,4 +114,16 @@ TEST_CASE("OutputBitStream can write 32-bit floats", "[OutputBitStream]") {
     REQUIRE(tmp.float_value == -20.02f);
 
     delete stream;
+}
+
+TEST_CASE("Cannot write out of OutputBitStream buffer bounds", "[InputBitStream]") {
+    int32_t buffer[] = {10, -20};
+
+    OutputBitStream *stream = new OutputBitStream(8);
+
+    REQUIRE(stream->write<int>(10));
+    REQUIRE(stream->write<int>(-20));
+
+    CHECK_THROWS(stream->write<int>(12312));
+    CHECK_THROWS(stream->write<bool>(true));
 }

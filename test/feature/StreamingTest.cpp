@@ -6,13 +6,13 @@ TEST_CASE("InputBitStream can read a buffer written by an OutputBitStream", "[St
     
     OutputBitStream* outputBitStream = new OutputBitStream(256);
 
-    outputBitStream->writeInt(1127310);
-    outputBitStream->writeShort(7566);
-    outputBitStream->writeBool(true); 
-    outputBitStream->writeByte(152);
-    outputBitStream->writeBool(false);
-    outputBitStream->writeShort(1566);
-    outputBitStream->writeFloat(3578.02f);
+    outputBitStream->write<int>(1127310);
+    outputBitStream->write<short>(7566);
+    outputBitStream->write<bool>(true); 
+    outputBitStream->write<unsigned char>(152);
+    outputBitStream->write<bool>(false);
+    outputBitStream->write<short>(1566);
+    outputBitStream->write<float>(3578.02f);
 
     outputBitStream->flush();
 
@@ -20,13 +20,13 @@ TEST_CASE("InputBitStream can read a buffer written by an OutputBitStream", "[St
 
     InputBitStream* inputBitStream = new InputBitStream(buffer, 256);
 
-    CHECK(inputBitStream->readInt() == 1127310);
-    CHECK(inputBitStream->readShort() == 7566);
-    CHECK(inputBitStream->readBool());
-    CHECK(inputBitStream->readByte() == 152);
-    CHECK_FALSE(inputBitStream->readBool());
-    CHECK(inputBitStream->readShort() == 1566);
-    CHECK(inputBitStream->readFloat() == 3578.02f);
+    CHECK(inputBitStream->read<int>() == 1127310);
+    CHECK(inputBitStream->read<short>() == 7566);
+    CHECK(inputBitStream->read<bool>());
+    CHECK(inputBitStream->read<uint8_t>() == 152);
+    CHECK_FALSE(inputBitStream->read<bool>());
+    CHECK(inputBitStream->read<short>() == 1566);
+    CHECK(inputBitStream->read<float>() == 3578.02f);
 
     delete outputBitStream;
     delete inputBitStream;
