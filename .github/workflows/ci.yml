@@ -1,4 +1,4 @@
-name: Test
+name: CI
 
 on: [push]
 
@@ -8,13 +8,9 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-      with:
-        submodules: true
     - name: configure
-      run: mkdir build && cd build && cmake -DCMAKE_CXX_FLAGS="-Werror" -DBUILD_TESTING="ON" ..
+      run: mkdir build && cd build && cmake -DCMAKE_CXX_FLAGS="-Werror" ..
     - name: build
       run: cmake --build build
     - name: test
       run: ./build/test_main
-      
-        
