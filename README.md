@@ -102,7 +102,7 @@ $ make
 
 ### Example build with tests
 ```bash
-# in your project root folder
+$ cd scratchy
 $ mkdir build && cd build
 $ cmake -DBUILD_TESTING=ON ..
 $ make
