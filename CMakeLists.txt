@@ -7,28 +7,30 @@ set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/third_party/cotire/CMake")
 
 include(cotire)
 
-include_directories(include)
+include_directories(./include)
 
 set(
     SOURCE_FILES
-    ./src/OutputBitStream.cpp ./src/InputBitStream.cpp
+    ./src/OutputBitStream.cpp
+    ./src/InputBitStream.cpp
 )
 
 add_library(
-    scratchy STATIC
+    scratchy 
+    STATIC
     ${SOURCE_FILES}
 )
 
 target_include_directories(
     scratchy 
     PUBLIC 
-    include
+    ./include
 )
 
 cotire(scratchy)
 
 
-option(ENABLE_COVERAGE "Enables gcov coverage" OFF)
+option(ENABLE_COVERAGE "Enables gcov code coverage" OFF)
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
 
@@ -42,12 +44,17 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
 
     add_subdirectory(third_party/catch)
 
-    add_executable(
-        test_main
+    set(
+        TEST_SOURCE_FILES
         test/test_main.cpp
         test/unit/InputBitStreamTest.cpp
         test/unit/OutputBitStreamTest.cpp
-        test/feature/StreamingTest.cpp
+        test/feature/SerializationTest.cpp
+    )
+
+    add_executable(
+        test_main
+        ${TEST_SOURCE_FILES}
     )
 
     target_link_libraries(test_main Catch2::Catch2 scratchy)

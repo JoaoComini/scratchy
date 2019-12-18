@@ -2,7 +2,7 @@
 #include <scratchy/InputBitStream.hpp>
 #include <scratchy/OutputBitStream.hpp>
 
-TEST_CASE("InputBitStream can read a buffer written by an OutputBitStream", "[Streaming]") {
+TEST_CASE("InputBitStream can read a buffer written by an OutputBitStream", "[Serialization]") {
     
     OutputBitStream* outputBitStream = new OutputBitStream(256);
 
