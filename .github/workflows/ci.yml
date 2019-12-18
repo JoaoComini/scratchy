@@ -18,6 +18,7 @@ jobs:
       run: ./build/test_main
     - name: coverage
       run: |
+        sudo apt-get install lcov
         lcov -c -d build/CMakeFiles/scratchy.dir/src/ -o build/coverage.info
         lcov -r build/coverage.info '/usr/*' -o build/coverage.info
         lcov --list build/coverage.info
