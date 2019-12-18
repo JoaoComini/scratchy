@@ -1,3 +1,7 @@
 [submodule "third_party/catch"]
 	path = third_party/catch
 	url = https://github.com/catchorg/Catch2
+	
+[submodule "third_party/cotire"]
+	path = third_party/cotire
+	url = https://github.com/sakra/cotire
