@@ -10,7 +10,7 @@ This class is reponsible for writing primitive types in a buffer.
 
 ## Example
 ```cpp
-#include "scratchy/OutputBitStream.hpp"
+#include "scratchy/scratchy.h"
 
 int main ()
 {
@@ -38,9 +38,8 @@ This class is reponsible for reading primitive types from a buffer. We highly re
 
 ## Example
 ```cpp
-#include "scratchy/InputBitSream.hpp"
-#include "scratchy/OutputBitStream.hpp"
-#include "assert.h"
+#include "scratchy/scratchy.h"
+
 
 int main ()
 {
