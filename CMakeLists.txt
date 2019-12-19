@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(scratchy VERSION 0.1.0)
+project(scratchy VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -29,6 +29,9 @@ add_library(
     "${SOURCE_FILES}"
 )
 
+target_compile_options(scratchy PRIVATE -Werror)
+target_compile_features(scratchy PRIVATE cxx_std_11)
+
 target_include_directories(
     scratchy PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
@@ -44,6 +47,8 @@ install(
     DIRECTORY "include/"
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
+
+cotire(scratchy)
 
 option(ENABLE_COVERAGE "Enables gcov code coverage" OFF)
 
@@ -74,5 +79,3 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
 
     target_link_libraries(test_main PRIVATE Catch2::Catch2 scratchy)
 endif()
-
-cotire(scratchy)

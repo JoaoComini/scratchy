@@ -101,6 +101,7 @@ $ make install
 
 ### Example build with tests
 ```bash
+$ git clone --recurse-submodules https://github.com/joaocomini/scratchy
 $ cd scratchy
 $ mkdir build && cd build
 $ cmake -DBUILD_TESTING=ON ..

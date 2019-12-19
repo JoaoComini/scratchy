@@ -63,7 +63,10 @@ bool OutputBitStream::write(const float input)
 }
 
 template bool OutputBitStream::write(const int32_t input);
+template bool OutputBitStream::write(const uint32_t input);
 template bool OutputBitStream::write(const int16_t input);
+template bool OutputBitStream::write(const uint16_t input);
+template bool OutputBitStream::write(const int8_t input);
 template bool OutputBitStream::write(const uint8_t input);
 
 void OutputBitStream::scratch() 

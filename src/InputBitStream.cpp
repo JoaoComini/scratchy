@@ -62,7 +62,10 @@ bool InputBitStream::read()
 }
 
 template int32_t InputBitStream::read();
+template uint32_t InputBitStream::read();
 template int16_t InputBitStream::read();
+template uint16_t InputBitStream::read();
+template int8_t InputBitStream::read();
 template uint8_t InputBitStream::read();
 
 void InputBitStream::scratch(uint32_t bits)
