@@ -1,8 +1,8 @@
 #pragma once
-#include <cstdint>
-#include <iostream>
 
-#include <scratchy/BitMask.hpp>
+#include <cstdint>
+
+#include "BitMask.hpp"
 
 class OutputBitStream {
 

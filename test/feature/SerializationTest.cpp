@@ -1,6 +1,5 @@
 #include <catch2/catch.hpp>
-#include <scratchy/InputBitStream.hpp>
-#include <scratchy/OutputBitStream.hpp>
+#include <scratchy/scratchy.h>
 
 TEST_CASE("InputBitStream can read a buffer written by an OutputBitStream", "[Serialization]") {
     

@@ -81,23 +81,23 @@ unsigned int
 float
 ```
 
-# Build
+# Install & Build
 
 You you need this dependencies installed:
 
 * g++
 * cmake
 * make
-* git (if you would like to use git submodules)
+* git (if you would like to clone from this repo)
 
-### Example build with git submodules
+### Example install with git
 ```bash
-# in your project root folder
-$ git submodules add https://github.com/joaocomini/scratchy
+$ git clone https://github.com/joaocomini/scratchy
 $ cd scratchy
 $ mkdir build && cd build
 $ cmake ..
 $ make
+$ make install
 ```
 
 ### Example build with tests

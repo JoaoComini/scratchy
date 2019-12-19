@@ -6,29 +6,44 @@ set(CMAKE_CXX_STANDARD 11)
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/third_party/cotire/CMake")
 
 include(cotire)
+include(GNUInstallDirs)
 
-include_directories(./include)
+include_directories("./include")
 
 set(
     SOURCE_FILES
-    ./src/OutputBitStream.cpp
-    ./src/InputBitStream.cpp
+    "./src/OutputBitStream.cpp"
+    "./src/InputBitStream.cpp"
+)
+
+set(
+    HEADER_FILES
+    "./include/scratchy/OutputBitStream.hpp"
+    "./include/scratchy/InputBitStream.hpp"
+    "./include/scratchy/BitMask.hpp"
 )
 
 add_library(
     scratchy 
     STATIC
-    ${SOURCE_FILES}
+    "${SOURCE_FILES}"
 )
 
 target_include_directories(
-    scratchy 
-    PUBLIC 
-    ./include
+    scratchy PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-cotire(scratchy)
+install(
+    TARGETS scratchy
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+)
 
+install(
+    DIRECTORY "include/"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+)
 
 option(ENABLE_COVERAGE "Enables gcov code coverage" OFF)
 
@@ -46,16 +61,18 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
 
     set(
         TEST_SOURCE_FILES
-        test/test_main.cpp
-        test/unit/InputBitStreamTest.cpp
-        test/unit/OutputBitStreamTest.cpp
-        test/feature/SerializationTest.cpp
+        "test/test_main.cpp"
+        "test/unit/InputBitStreamTest.cpp"
+        "test/unit/OutputBitStreamTest.cpp"
+        "test/feature/SerializationTest.cpp"
     )
 
     add_executable(
         test_main
-        ${TEST_SOURCE_FILES}
+        "${TEST_SOURCE_FILES}"
     )
 
-    target_link_libraries(test_main Catch2::Catch2 scratchy)
+    target_link_libraries(test_main PRIVATE Catch2::Catch2 scratchy)
 endif()
+
+cotire(scratchy)
